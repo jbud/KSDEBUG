@@ -9,12 +9,7 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 #include "KSDEBUG.h"
-
-#define SCREEN_WIDTH    128 // OLED display width, in pixels
-#define SCREEN_HEIGHT   64 // OLED display height, in pixels
-
-#define OLED_RESET      -1 // Reset pin # (or -1 if sharing Arduino reset pin)
-#define SCREEN_ADDRESS  0x3C ///< See datasheet for Address; 0x3D for 128x64, 0x3C for 128x32
+#include "splash.h"
 
 KSDEBUG::KSDEBUG()
 {
@@ -37,6 +32,9 @@ void KSDEBUG::init()
 {
     _display = new Adafruit_SSD1306(128, 64, &Wire, -1);
     _display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+    _display.clearDisplay();
+    _display.drawBitmap((128 - splash1_width) / 2, (64 - splash1_height) / 2,
+        splash1_data, splash1_width, splash1_height, 1);
     _display.display();
     delay(2000); // Pause for 2 seconds
 
